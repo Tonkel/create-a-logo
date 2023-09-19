@@ -6,5 +6,35 @@ const fs = require("fs");
 inquirer.registerPrompt("maxlength-input", MaxLengthInputPrompt);
 
 //DATA
+class Circle {
+  constructor(text, textColor, color) {
+    this.text = text;
+    this.textColor = textColor;
+    this.color = color;
+    this.data = `<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="150" cy="100" r="80" fill="${color}" />
+    <text x="150" y="125" font-size="60" text-anchor="middle" fill="${textColor}">${text}</text>
+  </svg>`;
+  }
+}
 
+class Triangle extends Circle {
+  constructor(text, textColor, color) {
+    super(text, textColor, color);
+    this.data = `<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="100,10 40,198 190,78 10,78 160,198 style="fill:${color};" />
+    <text x="100" y="125" font-size="35" text-anchor="middle" fill="${textColor}">${text}</text>
+  </svg>`;
+  }
+}
+
+class Square extends Circle {
+  constructor(text, textColor, color) {
+    super(text, textColor, color);
+    this.data = `<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+    <rect width="150" height="150" style="fill:${color};" />
+    <text x="75" y="100" font-size="60" text-anchor="middle" fill="${textColor}">${text}</text>
+  </svg>`;
+  }
+}
 //Functions
