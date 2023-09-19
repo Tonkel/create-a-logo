@@ -2,6 +2,7 @@
 const inquirer = require("inquirer");
 const MaxLengthInputPrompt = require("inquirer-maxlength-input-prompt");
 const fs = require("fs");
+const { error } = require("console");
 //register as a type of input
 inquirer.registerPrompt("maxlength-input", MaxLengthInputPrompt);
 
@@ -37,4 +38,54 @@ class Square extends Circle {
   </svg>`;
   }
 }
+
 //Functions
+function init() {
+  inquirer
+    .prompt([
+      {
+        type: "maxlength-input",
+        name: "text",
+        message: "Please enter your logo's text, must be <= 3 characters",
+        maxLength: 3,
+      },
+      {
+        type: "input",
+        name: "textColor",
+        message:
+          "Please enter your logo's text color in regular or hexidecimal format",
+      },
+      {
+        type: "list",
+        name: "shape",
+        message: "Please choose your preferred shape",
+        choices: ["triangle", "circle", "square"],
+      },
+      {
+        type: "input",
+        name: "shapeColor",
+        message:
+          "Please enter your logo's color in regular or hexidecimal format",
+      },
+    ])
+    .then((response) => {
+      console.log(response);
+
+      switch (response.shape.toLowerCase()) {
+        case "circle":
+          const newCircle = new Circle(
+            response.text,
+            response.textColor.toLowerCase(),
+            response.shapeColor
+          );
+
+          fs.writeFile("logo.svg", newCircle.data, (error) =>
+            error ? console.log(error) : console.log("Generated logo.svg")
+          );
+          break;
+      }
+    });
+}
+
+//initialize
+init();
