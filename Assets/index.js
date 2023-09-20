@@ -23,7 +23,7 @@ class Triangle extends Circle {
   constructor(text, textColor, color) {
     super(text, textColor, color);
     this.data = `<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="100,10 40,198 190,78 10,78 160,198 style="fill:${color};" />
+    <polygon points="100,10 40,198 190,78 10,78 160,198" style="fill:${color};" />
     <text x="100" y="125" font-size="35" text-anchor="middle" fill="${textColor}">${text}</text>
   </svg>`;
   }
@@ -69,8 +69,6 @@ function init() {
       },
     ])
     .then((response) => {
-      console.log(response);
-
       switch (response.shape.toLowerCase()) {
         case "circle":
           const newCircle = new Circle(
@@ -80,6 +78,28 @@ function init() {
           );
 
           fs.writeFile("logo.svg", newCircle.data, (error) =>
+            error ? console.log(error) : console.log("Generated logo.svg")
+          );
+          break;
+        case "triangle":
+          const newTriangle = new Triangle(
+            response.text,
+            response.textColor.toLowerCase(),
+            response.shapeColor
+          );
+
+          fs.writeFile("logo.svg", newTriangle.data, (error) =>
+            error ? console.log(error) : console.log("Generated logo.svg")
+          );
+          break;
+        case "square":
+          const newSquare = new Square(
+            response.text,
+            response.textColor.toLowerCase(),
+            response.shapeColor
+          );
+
+          fs.writeFile("logo.svg", newSquare.data, (error) =>
             error ? console.log(error) : console.log("Generated logo.svg")
           );
           break;
